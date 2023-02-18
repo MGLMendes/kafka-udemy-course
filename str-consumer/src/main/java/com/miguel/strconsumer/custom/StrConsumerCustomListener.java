@@ -20,6 +20,9 @@ public @interface StrConsumerCustomListener {
     String containerFactory() default "strContainerFactory";
 
     @AliasFor(annotation = KafkaListener.class, attribute = "groupId")
-    String groupId() default "";
+    String groupId() default "group-1";
+
+    @AliasFor(annotation = KafkaListener.class, attribute = "errorHandler")
+    String errorHandler() default "errorCustomHandler";
 
 }
