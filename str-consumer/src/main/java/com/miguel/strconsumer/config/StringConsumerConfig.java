@@ -1,6 +1,7 @@
 package com.miguel.strconsumer.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -14,11 +15,13 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.listener.RecordInterceptor;
 
 import java.util.HashMap;
 
 @Configuration
 @RequiredArgsConstructor
+@Log4j2
 public class StringConsumerConfig {
 
     private final KafkaProperties properties;
@@ -39,5 +42,24 @@ public class StringConsumerConfig {
         factory.setConsumerFactory(consumerFactory);
 
         return factory;
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, String> validMessageContainerFactory(
+            ConsumerFactory<String, String> consumerFactory) {
+        var factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
+        factory.setConsumerFactory(consumerFactory);
+        factory.setRecordInterceptor(validMessage());
+        return factory;
+    }
+
+    private RecordInterceptor<String, String> validMessage() {
+        return record -> {
+            if (record.value().contains("Teste")) {
+                log.info("Possui a palavra Teste");
+                return record;
+            }
+            return record;
+        };
     }
 }

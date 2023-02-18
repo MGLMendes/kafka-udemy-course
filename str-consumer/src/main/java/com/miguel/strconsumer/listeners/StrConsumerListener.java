@@ -6,8 +6,8 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.stereotype.Component;
 
-@Component
 @Log4j2
+@Component
 public class StrConsumerListener {
 
     @StrConsumerCustomListener(groupId = "group-1")
@@ -21,7 +21,7 @@ public class StrConsumerListener {
     }
 
 
-    @StrConsumerCustomListener(groupId = "group-2")
+    @KafkaListener(topics = "str-topic", groupId = "group-2", containerFactory = "validMessageContainerFactory")
     public void history(String message) {
         log.info("HISTORY ::: Receive message {}", message);
     }
