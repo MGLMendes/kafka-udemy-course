@@ -15,3 +15,17 @@ Para subir os container sem ficar printando no log
 --->>> docker-compose up -d
 Para um stopar o serviço
 --->>> docker-compose down
+
+
+Criar imagens
+Dentro da pasta principal do projeto, criar um Dockerfile com esses comandos
+FROM openjdk:17-alpine
+ARG JAR_FILE=target/*jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+Depois executar o Maven Clean, depois Maven Package
+
+Depois abrir o terminal e digitar o comando
+
+docker build -t mglmendes/nome-do-projeto:{numero da versao} .
