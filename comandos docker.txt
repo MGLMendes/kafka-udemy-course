@@ -1,5 +1,6 @@
 ######Para rodar um container do Docker#########
 Certifique-se que o Docker Desktop está rodando
+Certifique-se que está na pasta correta
 Ir na pasta correta e digitar 
 ---->> docker-compose up 
 Para para o contariner
@@ -10,4 +11,7 @@ Para ver os container que estão rodando e os que já rodaram
 ---->>>> docker compose ls -a
 Para listar as imagens baixadas 
 ---->> docker images
-Para subir os container sem ficar printando no log docker-compose up -d
+Para subir os container sem ficar printando no log
+--->>> docker-compose up -d
+Para um stopar o serviço
+--->>> docker-compose down
